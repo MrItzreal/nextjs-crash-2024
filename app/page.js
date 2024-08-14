@@ -1,21 +1,46 @@
-// Next.js provides 3 options to perform Data Fetching:
+// Two types of Metadata: "Static" & "Dynamic".
+// Both types are only supported in Server Components.
 
-// 1. Server Side Rendering (SSR): fetches data for a page on every request from the server. This means that the page is generated on the server each time a user visits it. Potentially increases the initial load time of a page.
+/*1. STATIC:
+To define static metadata, export a Metadata object from a layout.js or static page.js file.*/
+export const metadata = {
+  title: "Home",
+};
+// Output:
+// <head>
+//  <title>Home</title>
+// </head>
+export default function Page() {
+  return <h1>My Normal Next.js page with static metadata</h1>;
+}
 
-// 2. Static Site Generation (SSG): generates the HTML for your pages at build time. The generated pages are then served statically to users. Not good for dynamic content.
+/*2. DYNAMIC:
+You can use generateMetadata function to fetch metadata that requires dynamic values.*/
+export async function generateMetadata({ params, searchParams }) {
+  const product = await getProduct(params.id);
+  return { title: product.title };
+}
+// Output:
+// <head>
+//  <title>Unique Product</title>
+// </head>
+export default function Page() {
+  return <h1>My Normal Next.js page with dynamic metadata</h1>;
+}
 
-// 3. Incremental Static Regeneration (ISR): combines the benefits of SSG and SSR. Pages are initially generated statically at build time (like SSG). However, you can configure Next.js to revalidate and regenerate these pages at specific intervals or on-demand.
+// Below an example of Metadata from an HTML file:
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="style.css" />
+  <title>Expanding Cards</title>
+</head>;
 
-/*Choosing the Right Approach:
-
-SSR: When you need frequently updated or personalized content.
-SSG: When you have mostly static content and prioritize performance.
-ISR: When you want a balance between performance and fresh content.*/
-
-/*
-HERE ARE THE DEFINITIONS IN MY OWN WORDS!!
--Server Side Rendering (SSR): it fetches the data for a page upon request to a server. Once the data is obtain it renders your page. Basically in this process the page is render everytime you try to access it.
-
--Static Site Generation (SSG): It fetches the data from the server once and everytime you need to access this data since is embedded into the HTML is will display the content thus why is a great choice for static content.
-
--Incremental Static Regeneration (ISR): this one is a combination of both SSR and SSG in the sense that it fetches the data from a server to display data but the key difference is that you can revalidate the data based on an interval. in simple terms, once your data is fetched the revalidation gets triggered at a particular moment to see if the data is still the same or if it changed */
+//- In essence, metadata in Next.js is a crucial aspect of building well-structured, accessible, and SEO-friendly web applications. Understanding how to leverage the Metadata API effectively is key to optimizing your Next.js projects for both search engines and users.
