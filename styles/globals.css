@@ -8,6 +8,11 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
+body {
+  background-color: rgba(0, 7, 13, 0.716);
+  /* Remove after project is complete to avoid hurting my eyes with the brightness */
+}
+
 .main {
   width: 100vw;
   min-height: 100vh;
