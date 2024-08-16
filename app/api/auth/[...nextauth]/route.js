@@ -13,8 +13,11 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
-// The above export is usually done separately, meaning you handle GET and POST requests individually. However, for Next.js Authentication, this combined approach is necessary.
 /*
+The above export is usually done separately, meaning you handle GET and POST requests individually. However, for Next.js Authentication, this combined approach is necessary.
+
+NOTES:
 -[...nextauth] is the current naming convention in order to create a route.js file.
 -In Next.js, each route functions as a serverless endpoint, similar to AWS Lambda functions. 
--These endpoints are invoked only when requested, establishing a connection to the database on demand. This approach eliminates the need for a continuously running server, optimizing resource usage.*/
+-These endpoints are invoked only when requested, establishing a connection to the database on demand. This approach eliminates the need for a continuously running server, optimizing resource usage.
+*/
