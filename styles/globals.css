@@ -9,7 +9,7 @@
 */
 
 body {
-  background-color: rgba(0, 7, 13, 0.716);
+  background-color: rgba(53, 72, 88, 0.716);
   /* Remove after project is complete to avoid hurting my eyes with the brightness */
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 .main:before {
-  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #d30c0c30 100%);
+  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #73262630 100%);
   position: absolute;
   content: "";
   z-index: 2;

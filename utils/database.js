@@ -26,3 +26,4 @@ export const connectToDB = async () => {
 };
 
 // Note: If you don't set "mongoose.set" you'll get warnings in the console.
+// Replace <password> from MongoDB's "connection string" with the password of the MONGODB user.
