@@ -10,36 +10,38 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  async session({ session }) {
-    const sessionUser = await User.findOne({ email: session.user.email });
-    session.user.id = sessionUser._id.toString();
-    return session;
+  callbacks: {
+    async session({ session }) {
+      const sessionUser = await User.findOne({ email: session.user.email });
+      session.user.id = sessionUser._id.toString();
+      return session;
 
-    //1-Gets current user
-    //2-Updates current user ID
-    //3-Identifies which user is logged in
-  },
+      //1-Gets current user
+      //2-Updates current user ID
+      //3-Identifies which user is logged in
+    },
 
-  async signIn({ profile }) {
-    try {
-      await connectToDB();
+    async signIn({ profile }) {
+      try {
+        await connectToDB();
 
-      //Checks if "user" already exists:
-      const userExists = await User.findOne({ email: profile.email });
+        //Checks if "user" already exists:
+        const userExists = await User.findOne({ email: profile.email });
 
-      //If "user" does not exist, creates new one
-      if (!userExists) {
-        await User.create({
-          email: profile.email,
-          username: profile.name.replace(" ", "").toLowerCase(),
-          image: profile.picture,
-        });
+        //If "user" does not exist, creates new one
+        if (!userExists) {
+          await User.create({
+            email: profile.email,
+            username: profile.name.replace(" ", "").toLowerCase(),
+            image: profile.picture,
+          });
+        }
+        return true;
+      } catch (err) {
+        console.log(err);
+        return false;
       }
-      return true;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
+    },
   },
 });
 
