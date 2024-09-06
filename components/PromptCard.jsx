@@ -5,6 +5,12 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+  //Identifies the current user.
+  const { data: session } = useSession();
+  // utility funcs for pathNam/Router
+  const pathName = usePathname();
+  const router = useRouter();
+
   // Checks if prompt was copied, if so, icon changes.
   const [copied, setCopied] = useState("");
 
@@ -49,7 +55,6 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           />
         </div>
       </div>
-
       <p className="my-4 font-satoshi text-sm text-gray-800">{post.prompt}</p>
       <p
         className="font-inter text-sm blue_gradient cursor-pointer"
@@ -57,6 +62,24 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       >
         {post.tag}
       </p>
+
+      {/* Checks if logged user created the post and if they are in the profile page*/}
+      {session?.user.id === post.creator._id && pathName === "/profile" && (
+        <div className="mt-5 flex-center gap-4 border-t border-gray-300 pt-3">
+          <p
+            className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
